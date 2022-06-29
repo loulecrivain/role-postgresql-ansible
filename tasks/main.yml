@@ -9,6 +9,13 @@
       - python3-psycopg2
       - postgresql
 
+- name: Fetch PostreSQL info
+  become: true
+  become_user: postgres
+  postgresql_info:
+    filter: ver*,ext*
+  register: pginfo
+
 - name: Create PostgreSQL configuration file
   become: true
   template:

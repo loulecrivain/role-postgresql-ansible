@@ -58,10 +58,14 @@ max_connections = {{ pg_max_connections }}
 huge_pages = {{ pg_huge_pages }}
 temp_buffers = {{ pg_temp_buffers_kb }}kB
 max_prepared_transactions = {{ pg_max_prepared_transactions }}
+{% if (pgver | int) >= 13 %}
 hash_mem_multiplier = {{ pg_hash_mem_multiplier }}
+{% endif %}
 maintenance_work_mem = {{ pg_maintenance_work_mem_kb }}kB
 autovacuum_work_mem = {{ pg_autovacuum_work_mem_kb if pg_autovacuum_work_mem_kb == -1 else (pg_autovacuum_work_mem_kb | string) + 'kB' }}
+{% if (pgver | int) >= 13 %}
 logical_decoding_work_mem = {{ pg_logical_decoding_work_mem_kb }}kB
+{% endif %}
 max_stack_depth = {{ pg_max_stack_depth_kb }}kB
 shared_memory_type = {{ pg_shared_memory_type }}
 dynamic_shared_memory_type = {{ pg_dynamic_shared_memory_type }}

@@ -4,7 +4,7 @@
 pg_daemon: 'postgresql'
 
 # path for configuration file
-pg_conf_path: '/etc/postgresql/13/main/postgresql.conf'
+pg_conf_path: '/etc/postgresql/{{ pgver }}/main/postgresql.conf'
 
 # databases to create
 # keys: name
@@ -24,10 +24,10 @@ pgdb_extensions: []
 
 # settings for pg configuration file
 # general
-pg_data_directory: '/var/lib/postgresql/13/main'
-pg_hba_file: '/etc/postgresql/13/main/pg_hba.conf'
-pg_ident_file: '/etc/postgresql/13/main/pg_ident.conf'
-pg_external_pid_file: '/var/run/postgresql/13-main.pid'			# write an extra PID file
+pg_data_directory: '/var/lib/postgresql/{{ pgver }}/main'
+pg_hba_file: '/etc/postgresql/{{ pgver }}/main/pg_hba.conf'
+pg_ident_file: '/etc/postgresql/{{ pgver }}/main/pg_ident.conf'
+pg_external_pid_file: '/var/run/postgresql/{{ pgver }}-main.pid'			# write an extra PID file
 pg_listen_addresses: ['::1', '127.0.0.1']
 pg_port: 5432
 pg_superuser_reserved_connections: 3
@@ -118,10 +118,10 @@ pg_log_line_prefix: '%m [%p] %q%u@%d '
 pg_log_timezone: 'Etc/UTC'
 
 # process title
-pg_cluster_name: '13/main'			# added to process titles if nonempty
+pg_cluster_name: '{{ pgver }}/main'			# added to process titles if nonempty
 
 # statistics
-pg_stats_temp_directory: '/var/run/postgresql/13-main.pg_stat_tmp'
+pg_stats_temp_directory: '/var/run/postgresql/{{ pgver }}-main.pg_stat_tmp'
 
 # client defaults
 pg_datestyles: ['iso', 'mdy']
