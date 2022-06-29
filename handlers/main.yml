@@ -1,2 +1,7 @@
 ---
 # handlers file for postgresql
+- name: restart postgresql
+  become: true
+  service:
+    name: "{{ pg_daemon }}"
+    state: restarted

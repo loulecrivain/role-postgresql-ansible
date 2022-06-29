@@ -1,38 +1,48 @@
-Role Name
+PostgreSQL role
 =========
 
-A brief description of the role goes here.
+Deployment automation as an Ansible role for PostgreSQL.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Target machine should be Debian/Debian-derived and have a working
+apt installation.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+For role variables documentation, please refer to comments in
+the variable files.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+You can use this role as depicted in the following example:
+```yaml
+    - hosts: db.staging.service.wobcom.de
       roles:
-         - { role: username.rolename, x: 42 }
+         - role:
+           name: postgresql
+           vars:
+    #       use 25% of total host memory for shared buffers
+            pg_shared_buffers_percent: 25
+            pgdb_databases:
+              - { name: 'testdb' }
+            pgdb_users:
+              - { name: 'testuser', db: 'testdb', password: 'testpassword', comment: 'test user'}
+            pgdb_privileges:
+              -  {db: 'testdb', privs: 'ALL', role: 'testuser', type: 'database' }
+            pdb_extensions:
+              - { name: 'pg_visibility', db: 'testdb', cascade: yes }
+```
 
 License
 -------
 
-BSD
+Copyright Wobcom 2022 - all rights reserved.
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Contact: [lou.lecrivain@wdz.de](mailto:lou.lecrivain@wdz.de)
