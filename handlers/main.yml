@@ -3,5 +3,5 @@
 - name: restart postgresql
   become: true
   service:
-    name: "{{ pg_daemon }}"
+    name: "{{ postgresql__daemon }}"
     state: restarted

@@ -1,107 +1,107 @@
 # {{ ansible_managed }}
 
 # general settings
-data_directory = '{{ pg_data_directory }}'
-hba_file = '{{ pg_hba_file }}'
-ident_file = '{{ pg_ident_file }}'
-external_pid_file = '{{ pg_external_pid_file }}'
-listen_addresses = '{{ pg_listen_addresses | join(',')}}'
-port = {{ pg_port }}
-superuser_reserved_connections = {{ pg_superuser_reserved_connections }}
-unix_socket_directories = '{{ pg_unix_socket_directories }}'
-unix_socket_group = '{{ pg_unix_socket_group }}'
-unix_socket_permissions = {{ pg_unix_socket_permissions }}
-bonjour = {{ pg_bonjour }}
-bonjour_name = '{{ pg_bonjour_name }}'
+data_directory = '{{ postgresql__data_directory }}'
+hba_file = '{{ postgresql__hba_file }}'
+ident_file = '{{ postgresql__ident_file }}'
+external_pid_file = '{{ postgresql__external_pid_file }}'
+listen_addresses = '{{ postgresql__listen_addresses | join(',')}}'
+port = {{ postgresql__port }}
+superuser_reserved_connections = {{ postgresql__superuser_reserved_connections }}
+unix_socket_directories = '{{ postgresql__unix_socket_directories }}'
+unix_socket_group = '{{ postgresql__unix_socket_group }}'
+unix_socket_permissions = {{ postgresql__unix_socket_permissions }}
+bonjour = {{ postgresql__bonjour }}
+bonjour_name = '{{ postgresql__bonjour_name }}'
 
 # TCP
-tcp_keepalives_idle = {{ pg_tcp_keepalives_idle }}
-tcp_keepalives_interval = {{ pg_tcp_keepalives_interval }}
-tcp_keepalives_count = {{ pg_tcp_keepalives_count }}
-{% if (pgver|int) >= 12 %}
-tcp_user_timeout = {{ pg_tcp_user_timeout }}
+tcp_keepalives_idle = {{ postgresql__tcp_keepalives_idle }}
+tcp_keepalives_interval = {{ postgresql__tcp_keepalives_interval }}
+tcp_keepalives_count = {{ postgresql__tcp_keepalives_count }}
+{% if (postgresql__version|int) >= 12 %}
+tcp_user_timeout = {{ postgresql__tcp_user_timeout }}
 {% endif %}
 
 # Auth
-authentication_timeout = {{ pg_authentication_timeout_sec }}s
-password_encryption = {{ pg_password_encryption }}
-db_user_namespace = {{ pg_db_user_namespace }}
+authentication_timeout = {{ postgresql__authentication_timeout_sec }}s
+password_encryption = {{ postgresql__password_encryption }}
+db_user_namespace = {{ postgresql__db_user_namespace }}
 
 # GSSAPI using Kerberos
-krb_server_keyfile = '{{ pg_krb_server_keyfile }}'
-krb_caseins_users = '{{ pg_krb_caseins_users }}'
+krb_server_keyfile = '{{ postgresql__krb_server_keyfile }}'
+krb_caseins_users = '{{ postgresql__krb_caseins_users }}'
 
 # SSL
-ssl = {{ pg_ssl }}
-ssl_ca_file = '{{ pg_ssl_ca_file }}'
-ssl_cert_file = '{{ pg_ssl_cert_file }}'
-ssl_crl_file = '{{ pg_ssl_crl_file }}'
-ssl_key_file = '{{ pg_ssl_key_file }}'
-ssl_ciphers = '{{ pg_ssl_ciphers }}'
-ssl_prefer_server_ciphers = {{ pg_ssl_prefer_server_ciphers }}
-ssl_ecdh_curve = '{{ pg_ssl_ecdh_curve }}'
-{% if (pgver|int) >= 12 %}
-ssl_min_protocol_version = '{{ pg_ssl_min_protocol_version }}'
-ssl_max_protocol_version = '{{ pg_ssl_max_protocol_version }}'
+ssl = {{ postgresql__ssl }}
+ssl_ca_file = '{{ postgresql__ssl_ca_file }}'
+ssl_cert_file = '{{ postgresql__ssl_cert_file }}'
+ssl_crl_file = '{{ postgresql__ssl_crl_file }}'
+ssl_key_file = '{{ postgresql__ssl_key_file }}'
+ssl_ciphers = '{{ postgresql__ssl_ciphers }}'
+ssl_prefer_server_ciphers = {{ postgresql__ssl_prefer_server_ciphers }}
+ssl_ecdh_curve = '{{ postgresql__ssl_ecdh_curve }}'
+{% if (postgresql__version|int) >= 12 %}
+ssl_min_protocol_version = '{{ postgresql__ssl_min_protocol_version }}'
+ssl_max_protocol_version = '{{ postgresql__ssl_max_protocol_version }}'
 {% endif %}
-ssl_dh_params_file = '{{ pg_ssl_dh_params_file }}'
-ssl_passphrase_command = '{{ pg_ssl_passphrase_command }}'
-ssl_passphrase_command_supports_reload = {{ pg_ssl_passphrase_command_supports_reload }}
+ssl_dh_params_file = '{{ postgresql__ssl_dh_params_file }}'
+ssl_passphrase_command = '{{ postgresql__ssl_passphrase_command }}'
+ssl_passphrase_command_supports_reload = {{ postgresql__ssl_passphrase_command_supports_reload }}
 
 # query tuning
-random_page_cost = {{ pg_random_page_cost }}
+random_page_cost = {{ postgresql__random_page_cost }}
 
 # Memory
-work_mem = {{ pg_work_mem_kb }}kB
-{% if pg_shared_buffers_percent is defined and pg_shared_buffers_percent | string | length %}
-shared_buffers = {{ (pg_shared_buffers_percent*ansible_memtotal_mb*1024/100)|round|int }}kB
+work_mem = {{ postgresql__work_mem_kb }}kB
+{% if postgresql__shared_buffers_percent is defined and postgresql__shared_buffers_percent | string | length %}
+shared_buffers = {{ (postgresql__shared_buffers_percent*ansible_memtotal_mb*1024/100)|round|int }}kB
 {% else %}
-shared_buffers = {{ pg_shared_buffers_kb }}kB
+shared_buffers = {{ postgresql__shared_buffers_kb }}kB
 {% endif %}
-max_connections = {{ pg_max_connections }}
-huge_pages = {{ pg_huge_pages }}
-temp_buffers = {{ pg_temp_buffers_kb }}kB
-max_prepared_transactions = {{ pg_max_prepared_transactions }}
-{% if (pgver | int) >= 13 %}
-hash_mem_multiplier = {{ pg_hash_mem_multiplier }}
+max_connections = {{ postgresql__max_connections }}
+huge_pages = {{ postgresql__huge_pages }}
+temp_buffers = {{ postgresql__temp_buffers_kb }}kB
+max_prepared_transactions = {{ postgresql__max_prepared_transactions }}
+{% if (postgresql__version | int) >= 13 %}
+hash_mem_multiplier = {{ postgresql__hash_mem_multiplier }}
 {% endif %}
-maintenance_work_mem = {{ pg_maintenance_work_mem_kb }}kB
-autovacuum_work_mem = {{ pg_autovacuum_work_mem_kb if pg_autovacuum_work_mem_kb == -1 else (pg_autovacuum_work_mem_kb | string) + 'kB' }}
-{% if (pgver | int) >= 13 %}
-logical_decoding_work_mem = {{ pg_logical_decoding_work_mem_kb }}kB
+maintenance_work_mem = {{ postgresql__maintenance_work_mem_kb }}kB
+autovacuum_work_mem = {{ postgresql__autovacuum_work_mem_kb if postgresql__autovacuum_work_mem_kb == -1 else (postgresql__autovacuum_work_mem_kb | string) + 'kB' }}
+{% if (postgresql__version | int) >= 13 %}
+logical_decoding_work_mem = {{ postgresql__logical_decoding_work_mem_kb }}kB
 {% endif %}
-max_stack_depth = {{ pg_max_stack_depth_kb }}kB
-{% if (pgver | int) >= 12 %}
-shared_memory_type = {{ pg_shared_memory_type }}
+max_stack_depth = {{ postgresql__max_stack_depth_kb }}kB
+{% if (postgresql__version | int) >= 12 %}
+shared_memory_type = {{ postgresql__shared_memory_type }}
 {% endif %}
-dynamic_shared_memory_type = {{ pg_dynamic_shared_memory_type }}
+dynamic_shared_memory_type = {{ postgresql__dynamic_shared_memory_type }}
 
 # checkpoints
-max_wal_size = {{ pg_max_wal_size_kb }}kB
-min_wal_size = {{ pg_min_wal_size_kb }}kB
+max_wal_size = {{ postgresql__max_wal_size_kb }}kB
+min_wal_size = {{ postgresql__min_wal_size_kb }}kB
 
 # log
-log_line_prefix = '{{ pg_log_line_prefix }}'
-log_timezone = '{{ pg_log_timezone }}'
+log_line_prefix = '{{ postgresql__log_line_prefix }}'
+log_timezone = '{{ postgresql__log_timezone }}'
 
 # process title
-cluster_name = '{{ pg_cluster_name }}'
+cluster_name = '{{ postgresql__cluster_name }}'
 
 # statistics
-stats_temp_directory = '{{ pg_stats_temp_directory }}'
+stats_temp_directory = '{{ postgresql__stats_temp_directory }}'
 
 # client defaults
-datestyle = '{{ pg_datestyles | join(',') }}'
-intervalstyle = '{{ pg_intervalstyle }}'
-timezone = '{{ pg_timezone }}'
-lc_messages = '{{ pg_lc_messages }}'
-lc_monetary = '{{ pg_lc_monetary }}'
-lc_numeric = '{{ pg_lc_numeric }}'
-lc_time = '{{ pg_lc_time }}'
-default_text_search_config = '{{ pg_default_text_search_config }}'
+datestyle = '{{ postgresql__datestyles | join(',') }}'
+intervalstyle = '{{ postgresql__intervalstyle }}'
+timezone = '{{ postgresql__timezone }}'
+lc_messages = '{{ postgresql__lc_messages }}'
+lc_monetary = '{{ postgresql__lc_monetary }}'
+lc_numeric = '{{ postgresql__lc_numeric }}'
+lc_time = '{{ postgresql__lc_time }}'
+default_text_search_config = '{{ postgresql__default_text_search_config }}'
 
 # config includes
-include_dir = '{{ pg_include_dir }}'
-{% for pg_include_if_exists in pg_includes_if_exists %}
-include_if_exists = '{{ pg_include_if_exists }}'
+include_dir = '{{ postgresql__include_dir }}'
+{% for postgresql__include_if_exists in postgresql__includes_if_exists %}
+include_if_exists = '{{ postgresql__include_if_exists }}'
 {% endfor %}

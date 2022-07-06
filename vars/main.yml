@@ -1,3 +1,3 @@
 ---
 # vars file for postgresql
-pgver: "{{ pginfo['version']['major'] }}"
+postgresql__version: "{{ pginfo['version']['major'] }}"

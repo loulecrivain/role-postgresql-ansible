@@ -26,14 +26,14 @@ You can use this role as depicted in the following example:
            name: postgresql
            vars:
     #       use 25% of total host memory for shared buffers
-            pg_shared_buffers_percent: 25
-            pgdb_databases:
+            postgresql__shared_buffers_percent: 25
+            postgresql__databases:
               - { name: 'testdb' }
-            pgdb_users:
+            postgresql__users:
               - { name: 'testuser', db: 'testdb', password: 'testpassword', comment: 'test user'}
-            pgdb_privileges:
+            postgresql__privileges:
               -  {db: 'testdb', privs: 'ALL', role: 'testuser', type: 'database' }
-            pdb_extensions:
+            postgresql__extensions:
               - { name: 'pg_visibility', db: 'testdb', cascade: yes }
 ```
 

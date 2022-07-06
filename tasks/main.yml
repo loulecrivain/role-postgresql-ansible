@@ -20,7 +20,7 @@
   become: true
   template:
     src: postgresql.conf.j2
-    dest: "{{ pg_conf_path }}"
+    dest: "{{ postgresql__conf_path }}"
     mode: 0644
   notify: restart postgresql
 
@@ -31,14 +31,14 @@
   - name: Create databases
     postgresql_db:
       name: "{{ item.name }}"
-    loop: "{{ pgdb_databases | flatten(1) }}"
+    loop: "{{ postgresql__databases | flatten(1) }}"
   - name: Create db users
     postgresql_user:
       name: "{{ item.name }}"
       db: "{{ item.db }}"
       password: "{{ item.password }}"
       comment: "{{ item.comment }}"
-    loop: "{{ pgdb_users | flatten(1) }}"
+    loop: "{{ postgresql__users | flatten(1) }}"
   # TODO refine for different access types
   - name: Grant accesses
     postgresql_privs:
@@ -46,13 +46,13 @@
       privs: "{{ item.privs }}"
       role: "{{ item.role }}"
       type: "{{ item.type }}"
-    loop: "{{ pgdb_privileges | flatten(1) }}"
+    loop: "{{ postgresql__privileges | flatten(1) }}"
   - name: Activate databases extensions
     postgresql_ext:
       name: "{{ item.name }}"
       db: "{{ item.db }}"
       cascade: "{{ item.cascade }}"
-    loop: "{{ pgdb_extensions | flatten(1) }}"
+    loop: "{{ postgresql__extensions | flatten(1) }}"
 
 - name: Enable and start Postgres
   become: true
