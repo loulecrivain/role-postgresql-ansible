@@ -18,7 +18,9 @@ bonjour_name = '{{ pg_bonjour_name }}'
 tcp_keepalives_idle = {{ pg_tcp_keepalives_idle }}
 tcp_keepalives_interval = {{ pg_tcp_keepalives_interval }}
 tcp_keepalives_count = {{ pg_tcp_keepalives_count }}
+{% if (pgver|int) >= 12 %}
 tcp_user_timeout = {{ pg_tcp_user_timeout }}
+{% endif %}
 
 # Auth
 authentication_timeout = {{ pg_authentication_timeout_sec }}s
@@ -38,8 +40,10 @@ ssl_key_file = '{{ pg_ssl_key_file }}'
 ssl_ciphers = '{{ pg_ssl_ciphers }}'
 ssl_prefer_server_ciphers = {{ pg_ssl_prefer_server_ciphers }}
 ssl_ecdh_curve = '{{ pg_ssl_ecdh_curve }}'
+{% if (pgver|int) >= 12 %}
 ssl_min_protocol_version = '{{ pg_ssl_min_protocol_version }}'
 ssl_max_protocol_version = '{{ pg_ssl_max_protocol_version }}'
+{% endif %}
 ssl_dh_params_file = '{{ pg_ssl_dh_params_file }}'
 ssl_passphrase_command = '{{ pg_ssl_passphrase_command }}'
 ssl_passphrase_command_supports_reload = {{ pg_ssl_passphrase_command_supports_reload }}
@@ -67,7 +71,9 @@ autovacuum_work_mem = {{ pg_autovacuum_work_mem_kb if pg_autovacuum_work_mem_kb 
 logical_decoding_work_mem = {{ pg_logical_decoding_work_mem_kb }}kB
 {% endif %}
 max_stack_depth = {{ pg_max_stack_depth_kb }}kB
+{% if (pgver | int) >= 12 %}
 shared_memory_type = {{ pg_shared_memory_type }}
+{% endif %}
 dynamic_shared_memory_type = {{ pg_dynamic_shared_memory_type }}
 
 # checkpoints
