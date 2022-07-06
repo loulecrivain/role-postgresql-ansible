@@ -49,7 +49,7 @@ random_page_cost = {{ pg_random_page_cost }}
 
 # Memory
 work_mem = {{ pg_work_mem_kb }}kB
-{% if pg_shared_buffers_percent is defined %}
+{% if pg_shared_buffers_percent is defined and pg_shared_buffers_percent | string | length %}
 shared_buffers = {{ (pg_shared_buffers_percent*ansible_memtotal_mb*1024/100)|round|int }}kB
 {% else %}
 shared_buffers = {{ pg_shared_buffers_kb }}kB
