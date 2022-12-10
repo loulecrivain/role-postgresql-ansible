@@ -20,7 +20,7 @@ Example Playbook
 
 You can use this role as depicted in the following example:
 ```yaml
-    - hosts: db.staging.service.wobcom.de
+    - hosts: db
       roles:
          - role:
            name: postgresql
@@ -36,13 +36,3 @@ You can use this role as depicted in the following example:
             postgresql__extensions:
               - { name: 'pg_visibility', db: 'testdb', cascade: yes }
 ```
-
-License
--------
-
-Copyright Wobcom 2022 - all rights reserved.
-
-Author Information
-------------------
-
-Contact: [lou.lecrivain@wdz.de](mailto:lou.lecrivain@wdz.de)
